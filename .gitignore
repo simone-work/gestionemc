@@ -2,6 +2,9 @@
 node_modules/
 build/
 dist/
+node_modules/*
+node_modules/diff/LICENSE
+
 
 # Editor directories and files
 .vscode/*
