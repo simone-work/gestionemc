@@ -1,0 +1,124 @@
+MONETE
+Funzione per aggiungere e togliere monete (valuta virtuale ottenibile completando obbiettivi o dato da staff) - Parte gestione visualizzazioni admin, visualizzazione (utente), transazioni(utente)
+
+
+GESTIONE ADMIN GENERALE
+
+
+Parte BAN
+La parte admin fa una query su database interno per salvare l'ip ecc...
+
+BAN VISUALIZZAZIONE UTENTE
+Può vedere il suo ban e inserendo una password che gli viene, data può vedere gli screen allegati del ban
+
+
+
+
+ADMIN CREAZIONE PACK LUNCHER
+Poter caricare dei file, che andranno in una directory e il luncher potrà essere caricato in e anche restituire un json
+
+
+
+SE UNA PERSONA LOGGA SULL'APP TRAMITE PLUGIN IN GIOCO E COLLEGA ACCOUNT DI MICROSOFT/DISCORD E L'APP NOSTRA, DEVE POTER RILEVARE LA CITTA DI RESIDENZA (in gioco) E PER INVIARE LE MISSIVE
+MISSIVE(private (solo nella città) e pubbliche())
+
+
+
+
+
+
+
+
+
+Future:
+Login with Microsoft
+
+Sicurezza:
+SQLInjection
+Permessi database con più utenti
+Criptaggio password
+Endpoint 
+Sanificare i dati con le chiamate POST
+Controllo che il parametro "Origin" sia solo dal sito non da esterni
+Usar ei cookie per l'autetificazione
+
+
+
+Esempio Sicurezza
+
+app.delete('/api/delete', authenticateToken, cors(corsOptions), async (req, res) => {
+    const { table, condition } = req.body;
+    try {
+        const [result] = await promisePool.query(DELETE FROM ?? WHERE ?, [table, condition]);
+        res.json({ message: 'Cancellazione completata', result });
+    } catch (error) {
+        console.error('Errore durante la DELETE:', error);
+        res.status(500).send('Errore interno del server');
+    }
+});
+
+
+const authenticateToken = (req, res, next) => {
+    const token = req.cookies.jwtToken;
+    if (!token) {
+        return res.sendStatus(401); // Nessun token fornito
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            return res.sendStatus(403); // Token non valido o scaduto
+        }
+        req.user = user;
+        next();
+    });
+};
+
+
+Backend:
+Usare un endpoint fisso e query modulari
+-----------------------------------------------------------------------------
+
+PARTE ESTETICA LUNCHER CON ELECTRON (React ecc..)
+
+
+-----------------------------------------------------------------------------
+
+
+DELLE CLASSIFICHE (pagina unica con tutte le classifiche) Medaglie per i primi tre  con anche la skull del player
+
+Mostra una Leaderboard i primi 5 / 10 in tot categorie
+
+Ore minati(quanti minerali trova, a seconda del minerale aumenta di punti)
+
+Farming (quante piante trova, a seconda della pianta aumenta di punti)
+
+Giocatori uccisi 
+
+Mostri uccisi
+
+Legna tagliata
+
+
+
+
+
+------------------------------------------------------------------------------
+
+TEORIA
+
+- Il middleware prepara e pulisce i dati. 
+
+- Il controller lavora con i dati già puliti. Il database salva la versione standardizzata e pulita dei dati.
+
+- Differenza dalle vecchie applicazioni web, e che adesso il caricamento della pagina e costruzione viene eseguito dal browser del client e il server gli manda solo un file.js (prima un index.html, scarno con solo elemento script), e da
+  quel file veranno generate le varie pagine senza avere un effettivo cambiamento della pagina.
+
+          Aspetto	                  Vecchio Sistema (Server-Rendered)	                            Nuovo Sistema (Client-Rendered / SPA)
+    Stato	                Senza stato (Stateless). Gestito con Sessioni/Cookie.	        Con stato (Stateful). Gestito nel client (Redux, etc.).
+    Routing	                Gestito dal Server. Ogni URL è una nuova richiesta HTTP.	    Gestito dal Client. Nessun ricaricamento di pagina.
+    Tooling	                Semplice (editor di testo, FTP, ricarica browser).	            Complesso e potente (npm, Vite, Hot-Reloading).
+    SEO	                    Ottimo e nativo.                                                Problematico, richiede soluzioni come SSR (Next.js).
+    Offline	Impossibile.    Richiede sempre una connessione.	                            Possibile. Base per le Progressive Web Apps (PWA).
+
+
+    

@@ -1,0 +1,16 @@
+# Ignore files and directories that should not be tracked by Git
+node_modules/
+build/
+dist/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.traccia.txt
