@@ -1,16 +1,15 @@
-// src/pages/Dashboard.tsx (Versione Migliorata)
 import { PrimaryButton, Stack, Text } from '@fluentui/react';
 import { useAuth } from '../auth/AuthContext';
-import { useNavigate } from 'react-router-dom'; // Importiamo useNavigate qui!
+import { useNavigate } from 'react-router-dom'; 
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate(); // Usiamo l'hook qui, nel componente UI
+    const navigate = useNavigate();
+
 
   const handleLogout = async () => {
-    await logout(); // 1. Esegui la logica di logout (chiamata API e pulizia stato)
-    // 2. DOPO che il logout è completato, naviga
-    navigate('/home');
+    navigate('/', { replace: true }); // 1. Reindirizza l'utente alla home page per prevenire che [ProtectedRoute] lo reindirizzi al login
+    await logout(); // 2. Esegui la logica di logout (chiamata API e pulizia stato)
   };
 
   return (
@@ -18,7 +17,7 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       {user && (
         <Text variant="large">
-          Benvenuto, <strong>{user.name}</strong>!
+          Benvenuto, <strong>{user.username}</strong>!
         </Text>
       )}
       <Text>Questa è un'area protetta del sito.</Text>

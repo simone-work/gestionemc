@@ -4,7 +4,7 @@ import ProtectedRoute from './auth/ProtectedRoute';
 
 // Import delle pagine/viste
 import Login from './pages/Login';
-import Register from './pages/Register'; // Importa il nuovo componente
+import Register from './pages/Register'; 
 import Dashboard from './pages/Dashboard';
 
 // Componente per una Home Page pubblica di esempio
@@ -47,7 +47,7 @@ function App() {
           {/* --- ROTTE PUBBLICHE --- */}
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} /> {/* <-- NUOVA ROTTA */}
+          <Route path="/register" element={<Register />} /> 
           
           {/* --- ROTTE PROTETTE --- */}
           <Route element={<ProtectedRoute />}>

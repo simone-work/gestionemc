@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom'; // Importa Link
+import { Link, useNavigate } from 'react-router-dom'; // Importa Link
 import { TextField, PrimaryButton, Stack, Spinner, Text } from '@fluentui/react';
 import axios from 'axios';
 import { useAuth } from '../auth/AuthContext';
 
 const Login = () => {
-  // ... (tutto il codice precedente rimane invariato) ...
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
 
   const auth = useAuth();
 
@@ -20,7 +22,7 @@ const Login = () => {
     try {
       const response = await axios.post('/api/auth/login', { email, password });
       auth.login(response.data.user);
-      return <Navigate to="/dashboard" replace />;
+      return navigate('/dashboard', { replace: true });
     } catch (err: any) {
       setError(err.response?.data?.message || 'Credenziali non valide o errore di connessione.');
     } finally {

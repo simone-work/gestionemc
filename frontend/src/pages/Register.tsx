@@ -6,7 +6,7 @@ import { useAuth } from '../auth/AuthContext';
 
 const Register = () => {
   // Stato per i campi del form di registrazione
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -33,7 +33,7 @@ const Register = () => {
       // Il backend dovrebbe creare l'utente, impostare il cookie HttpOnly
       // e restituire i dati del nuovo utente, loggandolo automaticamente.
       const response = await axios.post('/api/auth/register', {
-        name,
+        username,
         email,
         password
       });
@@ -64,8 +64,8 @@ const Register = () => {
       
       <TextField
         label="Nome"
-        value={name}
-        onChange={(_, v) => setName(v || '')}
+        value={username}
+        onChange={(_, v) => setUsername(v || '')}
         disabled={isLoading}
       />
       <TextField
@@ -99,7 +99,7 @@ const Register = () => {
       <PrimaryButton
         text={isLoading ? 'Registrazione in corso...' : 'Registrati'}
         onClick={handleRegister}
-        disabled={isLoading || !email || !password || !name}
+        disabled={isLoading || !email || !password || !username}
       />
 
       {isLoading && <Spinner label="Creazione account in corso..." />}

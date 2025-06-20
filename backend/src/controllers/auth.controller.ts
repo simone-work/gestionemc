@@ -1,4 +1,4 @@
-import {RequestHandler } from 'express';
+import { RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -27,11 +27,11 @@ export const register: RequestHandler = async (req, res) => {
       return;
     }
 
-    const hashedPassword = await bcrypt.hash(password, process.env.HASH_SALT_ROUNDS as string);
+    const hashedPassword = await bcrypt.hash(password, 12);
     await createUser(username, email, hashedPassword);
 
     // Quando è l'ultima istruzione, non serve nemmeno il return finale
-    res.status(201).json({ success: true,  message: 'Utente registrato con successo.' });
+    res.status(201).json({ success: true, message: 'Utente registrato con successo.' });
   } catch (error) {
     console.error('Register error:', error);
     res.status(500).json({ success: false, message: 'Errore interno del server.' });
@@ -79,10 +79,15 @@ export const login: RequestHandler<{}, any, LoginBody> = async (req, res) => {
       maxAge: 60 * 60 * 1000 // Scadenza del cookie in millisecondi (es. 1 ora)
     });
 
+    const userPayload = {
+      id: user.id,
+      name: user.username,
+      isAdmin: user.is_admin
+    };
 
     // Invia la risposta finale
-    res.status(200).json({ success: true, message: 'Login effettuato con successo.' });
-    return; 
+    res.status(200).json({ success: true, message: 'Login effettuato con successo.', user: userPayload });
+    return;
 
   } catch (error) {
     console.error('Login error:', error);
@@ -120,8 +125,6 @@ export const logout: RequestHandler = async (req, res) => {
   try {
     // Ordiniamo al browser di cancellare il cookie 'accessToken'.
     // Per farlo, lo sovrascriviamo con un cookie vuoto e una data di scadenza passata.
-    // È FONDAMENTALE che le opzioni (httpOnly, secure, sameSite) siano le STESSE
-    // del cookie originale, altrimenti il browser potrebbe non sovrascriverlo correttamente.
     res.cookie('accessToken', '', {
       httpOnly: true,
       secure: process.env.STATUS_RELEASE === 'production',
