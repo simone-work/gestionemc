@@ -104,6 +104,11 @@ Legna tagliata
 
 ------------------------------------------------------------------------------
 
+COOMIT #1
+Cambiato sistema Login con autetificazione con Discord, Aggiornata la grafica HomePage, Aggionata grafica Dashboard, Aggiunta User interface, Aggiunta Admin interface9
+
+------------------------------------------------------------------------------
+
 TEORIA
 
 - Il middleware prepara e pulisce i dati. 
@@ -122,3 +127,6 @@ TEORIA
 
 
     
+
+CSS
+Per modificare le varie categorie (hover, disable, ecc..), bisogna mettere rootHovered, rootPressed, ecc..

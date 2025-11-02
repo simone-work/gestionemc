@@ -1,39 +1,27 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const JWT_SECRET = process.env.JWT_SECRET as string;
+import { RequestHandler } from 'express';
+import {verifyJwt} from '../utils/jwt.utils';
+import { AppError } from '../utils/error.handler';
 
 interface JwtPayload {
   id: number;
-  isAdmin: boolean;
-  userName: string;
+  discordId: string; 
 }
 
-export const authenticateToken = (
-  req: Request & { userId?: number; isAdmin?: boolean; userName?: string },
-  res: Response,
-  next: NextFunction
-) => {
-  // Leggi il token dal cookie invece che dall'header
+export const authenticateToken: RequestHandler = (req, res, next) => {
   const token = req.cookies.accessToken;
 
   if (!token) {
-    res.status(401).json({ success: false, message: 'Token mancante. Accesso non autorizzato.' });
-    return;
+    throw new AppError('Accesso negato. Token mancante.', 401);
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
-    req.userId = decoded.id;
-    req.isAdmin = decoded.isAdmin;
-    req.userName = decoded.userName;
+    const decoded = verifyJwt(token) as JwtPayload;
+    // Estendiamo l'oggetto Request per passare i dati al prossimo handler
+    (req as any).userId = decoded.id;
+    (req as any).isDiscordId = decoded.discordId;
     next();
-  } catch (err) {
-    res.status(401).json({ success: false, message: 'Token non valido' });
     return;
+  } catch (err) {
+    throw new AppError('Token non valido o scaduto', 403);
   }
 };
-

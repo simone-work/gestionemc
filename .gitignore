@@ -5,6 +5,9 @@ dist/
 node_modules/*
 node_modules/diff/LICENSE
 
+temp.txt
+
+
 
 # Editor directories and files
 .vscode/*
@@ -17,3 +20,4 @@ node_modules/diff/LICENSE
 *.sln
 *.sw?
 .traccia.txt
+.temp.txt
