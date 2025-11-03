@@ -22,6 +22,7 @@ export const authenticateToken: RequestHandler = (req, res, next) => {
     next();
     return;
   } catch (err) {
-    throw new AppError('Token non valido o scaduto', 403);
+    //throw new AppError('Token non valido o scaduto', 403);
+    next(err);
   }
 };

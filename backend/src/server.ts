@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
-import 'express-async-errors';
+import 'express-async-error';
 
 // Importa le tue rotte
 import authRoutes from './routes/auth.routes';
